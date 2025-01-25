@@ -50,3 +50,27 @@ function animateText(canvas, sentences) {
     
     displaySentence();
   }
+
+
+  // Download the result as a video (bonus functionality)
+function downloadAsVideo(canvas) {
+    const stream = canvas.captureStream(30); // 30 FPS
+    const mediaRecorder = new MediaRecorder(stream);
+    const chunks = [];
+  
+    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'captured_text_video.webm';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+  
+    mediaRecorder.start();
+    setTimeout(() => mediaRecorder.stop(), 10000); // Stop recording after 10 seconds
+  }
+  
