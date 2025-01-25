@@ -74,3 +74,14 @@ function downloadAsVideo(canvas) {
     setTimeout(() => mediaRecorder.stop(), 10000); // Stop recording after 10 seconds
   }
   
+  // Main function to execute the task
+function main() {
+    const canvas = createCanvas();
+    const sentences = getVisibleText();
+    animateText(canvas, sentences);
+    // Enable video download after the animation completes (bonus)
+    setTimeout(() => downloadAsVideo(canvas), sentences.length * 500);
+  }
+  
+  // Run the main function after a short delay to allow the page to load
+  setTimeout(main, 1000);
